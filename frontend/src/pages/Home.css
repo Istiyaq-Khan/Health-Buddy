@@ -1,0 +1,45 @@
+/* Font */
+.font-bangla {
+    font-family: 'Hind Siliguri', sans-serif;
+  }
+  
+  /* Animation */
+  .animated-header {
+    animation: fadeInDown 1s ease-out;
+  }
+  .animated-card {
+    animation: fadeInUp 1.2s ease-in;
+  }
+  .animated-card.delay-2 {
+    animation-delay: 0.4s;
+  }
+  .animated-card.delay-4 {
+    animation-delay: 0.8s;
+  }
+  
+  .glow {
+    text-shadow: 0 0 10px #28a745, 0 0 20px #28a745;
+  }
+  
+  /* Keyframes */
+  @keyframes fadeInDown {
+    0% {
+      opacity: 0;
+      transform: translateY(-40px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
