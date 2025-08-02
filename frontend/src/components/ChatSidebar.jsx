@@ -16,7 +16,7 @@ const ChatSidebar = ({ onSelectChat, selectedChatId, onNewChat }) => {
   const loadChatHistory = async () => {
     try {
       const token = await auth.currentUser.getIdToken();
-      const response = await axios.get('http://localhost:5000/api/health/chat-sessions', {
+      const response = await axios.get('https://health-buddy-backend-gigy.onrender.com/api/health/chat-sessions', {
         headers: { Authorization: `Bearer ${token}` }
       });
       setChatHistory(response.data);
