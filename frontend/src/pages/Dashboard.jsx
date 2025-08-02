@@ -23,7 +23,7 @@ export default function Dashboard() {
       try {
         const token = await user.getIdToken();
         const res = await axios.get(
-          "http://localhost:5000/api/health/history",
+          "https://health-buddy-backend-gigy.onrender.com/api/health/history",
           { headers: { Authorization: `Bearer ${token}` } }
         );
         setHistory(res.data);
