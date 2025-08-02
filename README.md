@@ -30,8 +30,8 @@
 
 ## 🧪 Screenshots
 
-> Add your app screenshots here later (UI + output results)  
-> Example: `![Screenshot](./screenshot1.png)`
+ 
+ ![Screenshot](./screenshot1.png)`
 
 ---
 
