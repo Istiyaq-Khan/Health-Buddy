@@ -7,7 +7,7 @@ import Dashboard from './pages/Dashboard';
 import Analyze from './pages/Analyze';
 import TalkWithDoctor from './pages/TalkWithDoctor';
 import About from './pages/About';
-import './app.css';
+import './App.css';
 
 function App() {
   return (
