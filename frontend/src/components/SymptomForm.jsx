@@ -39,7 +39,7 @@ const SymptomForm = ({ setResult }) => {
       console.log("Making API request with symptoms:", symptoms.split(',').map(s => s.trim()));
       
       const res = await axios.post(
-        "http://localhost:5000/api/health/analyze",
+        "https://health-buddy-backend-gigy.onrender.com/api/health/analyze",
         { symptoms: symptoms.split(',').map(s => s.trim()) },
         {
           headers: {
