@@ -36,7 +36,7 @@ const TalkWithDoctor = () => {
   const loadChatHistory = async () => {
     try {
       const token = await user.getIdToken();
-      const response = await axios.get('http://localhost:5000/api/health/chat-history', {
+      const response = await axios.get('https://health-buddy-backend-gigy.onrender.com/api/health/chat-history', {
         headers: { Authorization: `Bearer ${token}` }
       });
       setMessages(response.data);
@@ -49,7 +49,7 @@ const TalkWithDoctor = () => {
     setSelectedChatId(chatId);
     try {
       const token = await user.getIdToken();
-      const response = await axios.get(`http://localhost:5000/api/health/chat-sessions/${chatId}`, {
+      const response = await axios.get(`https://health-buddy-backend-gigy.onrender.com/api/health/chat-sessions/${chatId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setMessages(response.data.messages || []);
@@ -79,7 +79,7 @@ const TalkWithDoctor = () => {
 
     try {
       const token = await user.getIdToken();
-      const response = await axios.post('http://localhost:5000/api/health/chat', {
+      const response = await axios.post('https://health-buddy-backend-gigy.onrender.com/api/health/chat', {
         message: inputMessage,
         sessionId: selectedChatId
       }, {
