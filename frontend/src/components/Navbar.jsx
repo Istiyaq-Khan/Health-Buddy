@@ -86,6 +86,11 @@ const Navbar = () => {
                     👨‍⚕️ Talk with Doctor
                   </Link>
                 </li>
+                <li>
+                  <Link className={`nav-link ${isActive('/near-hospitals')}`} to="/near-hospitals">
+                    ♦️ Near Hospitals
+                  </Link>
+                </li>
                 <li className="nav-item">
                   <Link className={`nav-link ${isActive('/about')}`} to="/about">
                     👨‍💻 About Project

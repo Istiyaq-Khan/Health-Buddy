@@ -7,6 +7,7 @@ import Dashboard from './pages/Dashboard';
 import Analyze from './pages/Analyze';
 import TalkWithDoctor from './pages/TalkWithDoctor';
 import About from './pages/About';
+import NearHospitals from './pages/NearHospitals';
 import './App.css';
 
 function App() {
@@ -47,6 +48,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <About />
+                </ProtectedRoute>
+              } 
+             />
+             <Route
+             path="/near-hospitals" 
+              element={
+                <ProtectedRoute>
+                  <NearHospitals/>
                 </ProtectedRoute>
               } 
              />
