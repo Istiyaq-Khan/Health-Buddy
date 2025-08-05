@@ -79,6 +79,14 @@ export default function Home() {
             </div>
           </div>
         </div>
+        <div className="col-md-4 text-center mb-4 animated-card delay-4">
+          <div className="card border-0 shadow h-100 bg-white">
+            <div className="card-body">
+              <h3 className="text-success font-bangla">🏥 আশেপাশের হাসপাতাল</h3>
+              <p className="font-bangla">আপনার আশেপাশের ১৫ কিলোমিটারের মধ্যে কোন কোন হাসপাতাল আছে তা দেখাবে।</p>
+            </div>
+          </div>
+        </div>
       </div>
 
       <section className="bg-success text-white p-5 mt-5 rounded shadow">
