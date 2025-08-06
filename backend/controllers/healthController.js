@@ -28,7 +28,7 @@ Return ONLY a valid JSON object with this exact structure (no markdown, no extra
   "doctorAlert": true/false
 }
 
-Important: Return only the JSON object, no markdown markers or any other text. Please answer all questions in Bangla.
+Important: Return only the JSON object, no markdown markers or any other text. Please answer all questions in Bangla with english.
 `;
 
     console.log("Making request to Gemini API...");
@@ -152,7 +152,7 @@ export const chatWithDoctor = async (req, res) => {
   try {
     const prompt = `
 You are an AI Health Assistant. A user is asking about their health problem. 
-Please provide helpful advice, solutions, and create a daily routine for them. Please answer all questions in Bangla.
+Please provide helpful advice, solutions, and create a daily routine for them. Please answer all questions in Bangla and english.
 
 User's question: ${message}
 
