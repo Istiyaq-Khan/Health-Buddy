@@ -25,10 +25,11 @@ Return ONLY a valid JSON object with this exact structure (no markdown, no extra
   "vitamins": ["recommended vitamins"],
   "medicines": ["over-the-counter medicines"],
   "tips": "home care advice",
+  "advisedoctor": ["It will analyze my symptoms and which diseases I might have, and based on that, it will give me the names and phone numbers of three Bangladeshi doctors—especially from Sylhet and Dhaka—who can help cure my problem. Only provide the doctors names and numbers."]
   "doctorAlert": true/false
 }
 
-Important: Return only the JSON object, no markdown markers or any other text. Please answer all questions in Bangla.and tell english in brackets
+Important: Return only the JSON object, no markdown markers or any other text. Please answer all questions in Bangla. and tell English in brackets
 `;
 
     console.log("Making request to Gemini API...");
@@ -39,7 +40,7 @@ Important: Return only the JSON object, no markdown markers or any other text. P
 
     const txt =
       resp.data.candidates?.[0]?.content?.parts?.[0]?.text ||
-      '{"diseases":[],"vitamins":[],"medicines":[],"tips":"","doctorAlert":false}';
+      '{"diseases":[],"vitamins":[],"medicines":[],"tips":"","advisedoctor":[],"doctorAlert":false}';
 
     console.log("Raw Gemini response:", txt);
 
@@ -62,6 +63,7 @@ Important: Return only the JSON object, no markdown markers or any other text. P
         vitamins: json.vitamins || [],
         medicines: json.medicines || [],
         tips: json.tips || "No specific tips available.",
+        advisedoctor: json.advisedoctor || [],
         doctorAlert: json.doctorAlert || false
       };
       
@@ -76,6 +78,7 @@ Important: Return only the JSON object, no markdown markers or any other text. P
         vitamins: ["General vitamins like Vitamin C and D"],
         medicines: ["Consult a doctor for proper medication"],
         tips: txt.length > 100 ? txt.substring(0, 200) + "..." : txt,
+        advisedoctor: ["Unable to provide a doctor's number based on your condition"],
         doctorAlert: true
       };
       
@@ -159,8 +162,10 @@ User's question: ${message}
 Please respond with:
 1. Understanding of their problem
 2. Practical solutions and advice
-3. A daily routine to help with their issue
-4. When they should see a doctor (if needed)
+3. It will analyze my symptoms and which diseases I might have, and based on that, it will give me the names and phone numbers of three Bangladeshi doctors—especially from Sylhet and Dhaka—who can help cure my problem. Only provide the doctors names and numbers
+5. When they should see a doctor (if needed)
+4. A daily routine to help with their issue
+
 
 Keep your response helpful, professional, and focused on health and wellness.
 `;
