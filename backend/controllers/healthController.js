@@ -25,7 +25,7 @@ Return ONLY a valid JSON object with this exact structure (no markdown, no extra
   "vitamins": ["recommended vitamins"],
   "medicines": ["over-the-counter medicines"],
   "tips": "home care advice",
-  "advisedoctor": ["Please tell me what kind of doctor I should see. Please give me the names and numbers of the doctors in Bangladesh. If you can't give them, just tell me which doctor I should see. Don't write anything else.."],
+  "advisedoctor": ["Please tell me what kind of doctor I should see. just tell me which doctor I should see. Don't write anything else.."],
   "doctorAlert": true/false
 }
 
