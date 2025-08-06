@@ -158,7 +158,7 @@ const TalkWithDoctor = () => {
                 </div>
               </div>
               <div>
-                <h5 className="mb-0">AI Health Assistant</h5>
+                <h5 className="mb-0">AI Health Doctor</h5>
                 <small>Ask me about your health problems and I'll help you with solutions and daily routines</small>
               </div>
             </div>

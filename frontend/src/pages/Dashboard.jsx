@@ -143,6 +143,12 @@ export default function Dashboard() {
                         <p className="ms-3 small">{parsed.tips}</p>
                       </div>
                     )}
+                    {parsed.advisedoctor && (
+                      <div className="mb-2">
+                        <strong className="text-info">🧑‍⚕️ কিছু ডাক্তারের ফোন নম্বর:</strong>
+                        <p className="ms-3 small">{parsed.advisedoctor}</p>
+                      </div>
+                    )}
                     {parsed.doctorAlert && (
                       <div className="alert alert-warning py-1 px-2">
                         ⚠️ গুরুতর অবস্থায় ডাক্তারের পরামর্শ নিন!

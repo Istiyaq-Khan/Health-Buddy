@@ -67,6 +67,12 @@ const ResultCard = ({ result }) => {
                       <p className="text-info">{result.tips}</p>
                     </div>
                   )}
+                  {result.advisedoctor && (
+                    <div className="mb-3">
+                      <h6 className="text-info fw-bold">🧑‍⚕️ Some numbers of doctors:</h6>
+                      <p className="text-info">{result.advisedoctor}</p>
+                    </div>
+                  )}
                   
                   {result.doctorAlert && (
                     <div className="alert alert-warning" role="alert">
