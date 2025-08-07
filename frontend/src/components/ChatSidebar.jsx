@@ -113,10 +113,10 @@ const ChatSidebar = ({ onSelectChat, selectedChatId, onNewChat }) => {
                     </div>
                   </div>
                   <div className="flex-grow-1 min-w-0">
-                    <div className={`fw-bold ${selectedChatId === chat._id ? 'text-dark' : 'text-light'}`}>
+                    <div className={`fw-bold ${selectedChatId === chat._id ? 'text-dark' : 'text-dark'}`}>
                       {truncateMessage(chat.title || 'Health Chat')}
                     </div>
-                    <div className={`small ${selectedChatId === chat._id ? 'text-white-50' : 'text-muted'}`}>
+                    <div className={`small ${selectedChatId === chat._id ? 'text-white-50' : 'text-dark'}`}>
                       {formatDate(chat.createdAt)}
                     </div>
                   </div>
