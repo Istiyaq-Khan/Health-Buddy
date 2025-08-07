@@ -48,7 +48,7 @@ const ChatSidebar = ({ onSelectChat, selectedChatId, onNewChat }) => {
 
   if (loading) {
     return (
-      <div className="bg-light border-end" style={{ width: '280px', height: '100vh' }}>
+      <div className="bg-dark border-end" style={{ width: '280px', height: '100vh' }}>
         <div className="p-3">
           <div className="d-flex justify-content-between align-items-center mb-3">
             <h6 className="mb-0 text-success">💬 Chat History</h6>
@@ -70,8 +70,8 @@ const ChatSidebar = ({ onSelectChat, selectedChatId, onNewChat }) => {
   }
 
   return (
-    <div className="bg-light border-end d-flex flex-column" style={{ width: '280px', height: '100vh' }}>
-      <div className="p-3 border-bottom">
+    <div className="bg-dark border-end d-flex flex-column" style={{ width: '280px', height: '100vh' }}>
+      <div className="p-3 border-bottom border-success">
         <div className="d-flex justify-content-between align-items-center">
           <h6 className="mb-0 text-success">💬 Chat History</h6>
           <button 
@@ -87,8 +87,8 @@ const ChatSidebar = ({ onSelectChat, selectedChatId, onNewChat }) => {
         {chatHistory.length === 0 ? (
           <div className="p-3 text-center">
             <div className="text-muted">
-              <p className="mb-2">No chat history yet</p>
-              <small>Start a new conversation to see it here</small>
+              <p className="mb-2 text-light">No chat history yet</p>
+              <small className="text-secondary">Start a new conversation to see it here</small>
             </div>
           </div>
         ) : (
@@ -97,7 +97,7 @@ const ChatSidebar = ({ onSelectChat, selectedChatId, onNewChat }) => {
               <div
                 key={chat._id}
                 className={`chat-item p-2 rounded mb-1 cursor-pointer ${
-                  selectedChatId === chat._id ? 'bg-success text-white' : 'hover-bg-light'
+                  selectedChatId === chat._id ? 'bg-success text-white' : 'bg-secondary-subtle text-light'
                 }`}
                 onClick={() => onSelectChat(chat._id)}
                 style={{ cursor: 'pointer' }}
@@ -113,7 +113,7 @@ const ChatSidebar = ({ onSelectChat, selectedChatId, onNewChat }) => {
                     </div>
                   </div>
                   <div className="flex-grow-1 min-w-0">
-                    <div className={`fw-bold ${selectedChatId === chat._id ? 'text-white' : 'text-dark'}`}>
+                    <div className={`fw-bold ${selectedChatId === chat._id ? 'text-white' : 'text-light'}`}>
                       {truncateMessage(chat.title || 'Health Chat')}
                     </div>
                     <div className={`small ${selectedChatId === chat._id ? 'text-white-50' : 'text-muted'}`}>
@@ -130,4 +130,4 @@ const ChatSidebar = ({ onSelectChat, selectedChatId, onNewChat }) => {
   );
 };
 
-export default ChatSidebar; 
+export default ChatSidebar;

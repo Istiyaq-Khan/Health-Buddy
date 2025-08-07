@@ -37,29 +37,29 @@ export default function Dashboard() {
 
   if (loading) {
     return (
-      <div className="container text-center mt-5">
+      <div className="container text-center mt-5 text-white">
         <div className="spinner-border text-success" role="status"></div>
-        <p className="text-muted mt-2">লোড হচ্ছে...</p>
+        <p className="mt-2">লোড হচ্ছে...</p>
       </div>
     );
   }
 
   if (!user) {
     return (
-      <div className="container text-center mt-5">
+      <div className="container text-center mt-5 text-white">
         <h2 className="text-danger">🔐 লগইন প্রয়োজন</h2>
-        <p className="text-muted">ড্যাশবোর্ডে ঢুকতে হলে লগইন করতে হবে।</p>
+        <p>ড্যাশবোর্ডে ঢুকতে হলে লগইন করতে হবে।</p>
         <Link to="/login" className="btn btn-success">লগইন করো</Link>
       </div>
     );
   }
 
   return (
-    <div className="container py-4">
+    <div className="container py-4 bg-dark text-white min-vh-100">
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h2 className="text-success">📊 তোমার পুরোনো বিশ্লেষণ</h2>
         <button
-          className="btn btn-outline-success btn-sm"
+          className="btn btn-outline-light btn-sm"
           onClick={async () => {
             try {
               const token = await user.getIdToken();
@@ -79,9 +79,9 @@ export default function Dashboard() {
       </div>
 
       {history.length === 0 ? (
-        <div className="card text-center shadow-sm p-4 border-0 bg-light">
-          <h5 className="text-muted mb-2">🤔 কোন এনালাইসিস নেই!</h5>
-          <p className="text-muted">চলো, প্রথম এনালাইসিস করে ফেলি এখনই।</p>
+        <div className="card text-center shadow-sm p-4 border-0 bg-secondary text-white">
+          <h5 className="mb-2">🤔 কোন এনালাইসিস নেই!</h5>
+          <p>চলো, প্রথম এনালাইসিস করে ফেলি এখনই।</p>
           <Link to="/analyze" className="btn btn-success mt-2">🔍 এনালাইসিস শুরু করো</Link>
         </div>
       ) : (
@@ -96,11 +96,11 @@ export default function Dashboard() {
           } catch (err) {}
 
           return (
-            <div key={i} className="card mb-3 border-success shadow-sm">
+            <div key={i} className="card mb-3 border-success shadow-sm bg-secondary text-white">
               <div className="card-body">
                 <div className="d-flex justify-content-between align-items-center mb-2">
                   <h5 className="text-success mb-0">📄 এনালাইসিস #{history.length - i}</h5>
-                  <small className="text-muted">{new Date(h.timestamp || h.createdAt).toLocaleString()}</small>
+                  <small className="text-light">{new Date(h.timestamp || h.createdAt).toLocaleString()}</small>
                 </div>
 
                 <p className="mb-2"><strong>🩺 লক্ষণ:</strong> {Array.isArray(h.symptoms) ? h.symptoms.join(", ") : h.symptoms}</p>
@@ -156,7 +156,7 @@ export default function Dashboard() {
                     )}
                   </div>
                 ) : (
-                  <pre className="bg-light p-2 rounded small">{parsed}</pre>
+                  <pre className="bg-dark p-2 rounded small text-white border border-secondary">{parsed}</pre>
                 )}
               </div>
             </div>

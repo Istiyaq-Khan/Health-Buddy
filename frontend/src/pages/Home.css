@@ -1,4 +1,20 @@
 /* Font */
+body {
+  background-color: #121212 !important;
+}
+
+.glow {
+  text-shadow: 0 0 10px #00ff9f, 0 0 20px #00ff9f, 0 0 30px #00ff9f;
+}
+
+.card {
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: scale(1.03);
+}
+
 .font-bangla {
     font-family: 'Hind Siliguri', sans-serif;
   }

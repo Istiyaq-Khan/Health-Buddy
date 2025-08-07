@@ -116,8 +116,8 @@ const TalkWithDoctor = () => {
   if (!user) {
     return (
       <div className="container mt-5 text-center">
-        <div className="card border-warning">
-          <div className="card-header bg-warning text-dark">
+        <div className="card border-warning bg-dark text-white">
+          <div className="card-header bg-success text-white">
             <h4 className="mb-0">🔒 Authentication Required</h4>
           </div>
           <div className="card-body">
@@ -129,7 +129,7 @@ const TalkWithDoctor = () => {
   }
 
   return (
-    <div className="d-flex h-100" style={{ height: 'calc(100vh - 76px)' }}>
+    <div className="d-flex h-100" style={{ height: 'calc(100vh - 76px)', backgroundColor: '#0B0F0E' }}>
       {/* Sidebar */}
       {showSidebar && (
         <ChatSidebar
@@ -142,7 +142,7 @@ const TalkWithDoctor = () => {
       {/* Main Chat Area */}
       <div className="flex-grow-1 d-flex flex-column">
         {/* Header */}
-        <div className="bg-success text-white p-3">
+        <div className="p-3" style={{ backgroundColor: '#1B5E20' }}>
           <div className="d-flex align-items-center justify-content-between">
             <div className="d-flex align-items-center">
               <button
@@ -152,14 +152,14 @@ const TalkWithDoctor = () => {
                 ☰
               </button>
               <div className="me-3">
-                <div className="bg-white rounded-circle d-flex align-items-center justify-content-center" 
+                <div className="bg-dark rounded-circle d-flex align-items-center justify-content-center" 
                      style={{ width: '40px', height: '40px' }}>
                   <span className="text-success fw-bold">🤖</span>
                 </div>
               </div>
               <div>
-                <h5 className="mb-0">AI Health Doctor</h5>
-                <small>Ask me about your health problems and I'll help you with solutions and daily routines</small>
+                <h5 className="mb-0 text-white">AI Health Doctor</h5>
+                <small className="text-muted">Ask me about your health problems and I’ll help you</small>
               </div>
             </div>
             <button
@@ -171,101 +171,93 @@ const TalkWithDoctor = () => {
           </div>
         </div>
 
-      {/* Messages Container */}
-      <div className="flex-grow-1 bg-light overflow-auto p-3" style={{ height: 'calc(100vh - 200px)' }}>
-        {messages.length === 0 ? (
-          <div className="text-center mt-5">
-            <div className="bg-white rounded p-4 shadow-sm">
-              <h4 className="text-success mb-3">👨‍⚕️ Welcome to AI Health Assistant</h4>
-              <p className="text-muted mb-4">
-                I'm here to help you with your health concerns. Ask me anything about:
-              </p>
-              <div className="row text-start">
-                <div className="col-md-6">
-                  <ul className="list-unstyled">
-                    <li className="mb-2">🏥 Health problems and symptoms</li>
-                    <li className="mb-2">💊 Medication advice</li>
-                    <li className="mb-2">🥗 Diet and nutrition</li>
-                  </ul>
-                </div>
-                <div className="col-md-6">
-                  <ul className="list-unstyled">
-                    <li className="mb-2">🏃‍♂️ Exercise routines</li>
-                    <li className="mb-2">😴 Sleep and lifestyle</li>
-                    <li className="mb-2">📅 Daily health routines</li>
-                  </ul>
+        {/* Messages Container */}
+        <div className="flex-grow-1 overflow-auto p-3" style={{ height: 'calc(100vh - 200px)' }}>
+          {messages.length === 0 ? (
+            <div className="text-center mt-5">
+              <div className="bg-dark rounded p-4 shadow-sm text-white">
+                <h4 className="text-success mb-3">👨‍⚕️ Welcome to AI Health Assistant</h4>
+                <p className="text-muted mb-4">
+                  I'm here to help you with your health concerns. Ask me anything about:
+                </p>
+                <div className="row text-start">
+                  <div className="col-md-6">
+                    <ul className="list-unstyled">
+                      <li className="mb-2">🏥 Health problems and symptoms</li>
+                      <li className="mb-2">💊 Medication advice</li>
+                      <li className="mb-2">🥗 Diet and nutrition</li>
+                    </ul>
+                  </div>
+                  <div className="col-md-6">
+                    <ul className="list-unstyled">
+                      <li className="mb-2">🏃‍♂️ Exercise routines</li>
+                      <li className="mb-2">😴 Sleep and lifestyle</li>
+                      <li className="mb-2">📅 Daily health routines</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        ) : (
-          <div className="d-flex flex-column gap-3">
-            {messages.map((message, index) => (
-              <div key={index} className={`d-flex ${message.role === 'user' ? 'justify-content-end' : 'justify-content-start'}`}>
-                <div className={`max-w-75 ${message.role === 'user' ? 'order-2' : 'order-1'}`}>
-                  <div className={`rounded p-3 ${message.role === 'user' ? 'bg-success text-white' : 'bg-white shadow-sm'}`}>
-                    <div className="d-flex align-items-start gap-2">
-                      {message.role === 'assistant' && (
-                        <div className="bg-success rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" 
-                             style={{ width: '32px', height: '32px' }}>
-                          <span className="text-white">🤖</span>
+          ) : (
+            <div className="d-flex flex-column gap-3">
+              {messages.map((message, index) => (
+                <div key={index} className={`d-flex ${message.role === 'user' ? 'justify-content-end' : 'justify-content-start'}`}>
+                  <div className={`max-w-75 ${message.role === 'user' ? 'order-2' : 'order-1'}`}>
+                    <div className={`rounded p-3 ${message.role === 'user' ? 'bg-success text-white' : 'bg-dark text-white'}`}>
+                      <div className="d-flex align-items-start gap-2">
+                        {message.role === 'assistant' && (
+                          <div className="bg-success rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" 
+                               style={{ width: '32px', height: '32px' }}>
+                            <span className="text-white">🤖</span>
+                          </div>
+                        )}
+                        <div className="flex-grow-1">
+                          <div className="mb-1">
+                            <small className="text-muted">
+                              {message.role === 'user' ? 'You' : 'AI Assistant'} • {formatTime(message.timestamp)}
+                            </small>
+                          </div>
+                          <div>
+                            {message.content}
+                          </div>
                         </div>
-                      )}
-                      <div className="flex-grow-1">
-                        <div className="mb-1">
-                          <small className={`${message.role === 'user' ? 'text-white-50' : 'text-muted'}`}>
-                            {message.role === 'user' ? 'You' : 'AI Assistant'} • {formatTime(message.timestamp)}
-                          </small>
-                        </div>
-                        <div className={`${message.role === 'user' ? 'text-white' : 'text-dark'}`}>
-                          {message.content}
-                        </div>
-                      </div>
-                      {message.role === 'user' && (
-                        <div className="bg-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" 
-                             style={{ width: '32px', height: '32px' }}>
-                          <span className="text-success">👤</span>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-            {loading && (
-              <div className="d-flex justify-content-start">
-                <div className="bg-white rounded p-3 shadow-sm">
-                  <div className="d-flex align-items-center gap-2">
-                    <div className="bg-success rounded-circle d-flex align-items-center justify-content-center" 
-                         style={{ width: '32px', height: '32px' }}>
-                      <span className="text-white">🤖</span>
-                    </div>
-                    <div>
-                      <small className="text-muted">AI Assistant • typing</small>
-                      <div className="d-flex gap-1 mt-1">
-                        <div className="bg-success rounded-circle" style={{ width: '8px', height: '8px', animation: 'bounce 1.4s infinite' }}></div>
-                        <div className="bg-success rounded-circle" style={{ width: '8px', height: '8px', animation: 'bounce 1.4s infinite 0.2s' }}></div>
-                        <div className="bg-success rounded-circle" style={{ width: '8px', height: '8px', animation: 'bounce 1.4s infinite 0.4s' }}></div>
+                        {message.role === 'user' && (
+                          <div className="bg-dark rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" 
+                               style={{ width: '32px', height: '32px' }}>
+                            <span className="text-success">👤</span>
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            )}
-            <div ref={messagesEndRef} />
-          </div>
-        )}
-      </div>
-
-        {/* Messages Container */}
-        
+              ))}
+              {loading && (
+                <div className="d-flex justify-content-start">
+                  <div className="bg-dark rounded p-3 shadow-sm text-white">
+                    <div className="d-flex align-items-center gap-2">
+                      <div className="bg-success rounded-circle d-flex align-items-center justify-content-center" 
+                           style={{ width: '32px', height: '32px' }}>
+                        <span className="text-white">🤖</span>
+                      </div>
+                      <div>
+                        <small className="text-muted">AI Assistant • typing</small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+              <div ref={messagesEndRef} />
+            </div>
+          )}
+        </div>
 
         {/* Input Form */}
-        <div className="bg-white border-top p-3">
+        <div className="border-top p-3" style={{ backgroundColor: '#121212' }}>
           <form onSubmit={sendMessage} className="d-flex gap-2">
             <input
               type="text"
-              className="form-control"
+              className="form-control bg-dark text-white border-secondary"
               placeholder="Ask me about your health problem..."
               value={inputMessage}
               onChange={(e) => setInputMessage(e.target.value)}
@@ -287,20 +279,10 @@ const TalkWithDoctor = () => {
       </div>
 
       <style jsx>{`
-        @keyframes bounce {
-          0%, 80%, 100% {
-            transform: scale(0);
-          }
-          40% {
-            transform: scale(1);
-          }
-        }
-        .max-w-75 {
-          max-width: 75%;
-        }
+        .max-w-75 { max-width: 75%; }
       `}</style>
     </div>
   );
 };
 
-export default TalkWithDoctor; 
+export default TalkWithDoctor;
