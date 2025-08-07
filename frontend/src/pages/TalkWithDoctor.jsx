@@ -159,7 +159,7 @@ const TalkWithDoctor = () => {
               </div>
               <div>
                 <h5 className="mb-0 text-white">AI Health Doctor</h5>
-                <small className="text-muted">Ask me about your health problems and I’ll help you</small>
+                <small className="text-white">Ask me about your health problems and I’ll help you</small>
               </div>
             </div>
             <button
