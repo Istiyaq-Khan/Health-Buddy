@@ -94,7 +94,7 @@ const NearHospitals = () => {
         <div className="d-flex justify-content-center align-items-center" style={{ height: '50vh' }}>
           <div className="text-center">
             <div className="spinner-border text-success mb-3" role="status"></div>
-            <p className="text-muted">📡 তোমার লোকেশন নিচ্ছি... একটু অপেক্ষা করো</p>
+            <p className="text-white">📡 তোমার লোকেশন নিচ্ছি... একটু অপেক্ষা করো</p>
           </div>
         </div>
       )}
