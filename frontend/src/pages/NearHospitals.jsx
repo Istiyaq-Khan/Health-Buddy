@@ -3,7 +3,7 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import axios from 'axios';
 import L from 'leaflet';
 import hospitalImg from '../assets/image.png'; 
-import userImg from '../assets/marker-icon.png'; // Assuming you have a user marker image
+import userImg from '../assets/red-location-icon-1.png'; // Assuming you have a user marker image
 import 'leaflet/dist/leaflet.css';
 
 // Custom icon for hospitals
