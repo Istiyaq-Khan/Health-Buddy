@@ -139,7 +139,7 @@ const ResultCard = ({ result }) => {
                         className="fw-bold"
                         style={{ color: colors.secondaryGreen }}
                       >
-                        🧑‍⚕️ Some numbers of doctors:
+                        🧑‍⚕️ The kind of doctors you should visit:
                       </h6>
                       <p style={{ color: colors.secondaryGreen }}>
                         {result.advisedoctor}
