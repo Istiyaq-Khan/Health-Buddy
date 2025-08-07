@@ -3,11 +3,21 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import axios from 'axios';
 import L from 'leaflet';
 import hospitalImg from '../assets/image.png'; 
+import userImg from '../assets/marker-icon.png'; // Assuming you have a user marker image
 import 'leaflet/dist/leaflet.css';
 
+// Custom icon for hospitals
 const hospitalIcon = new L.Icon({
   iconUrl: hospitalImg,
   iconSize: [28, 28],
+});
+
+// Custom icon for the user's location
+const userIcon = new L.Icon({
+  iconUrl: userImg,
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
 });
 
 const NearHospitals = () => {
@@ -21,7 +31,7 @@ const NearHospitals = () => {
           lat: pos.coords.latitude,
           lon: pos.coords.longitude,
         };
-        console.log('User Location:', coords); // Debugging log
+        console.log('User Location:', coords);
         setLocation(coords);
         fetchHospitals(coords.lat, coords.lon);
       },
@@ -48,7 +58,7 @@ const NearHospitals = () => {
         }
       );
       const results = response.data.elements;
-      console.log('Hospitals Data:', results); // Debugging log
+      console.log('Hospitals Data:', results);
       setHospitals(results);
     } catch (error) {
       console.error('Error fetching hospitals:', error);
@@ -69,14 +79,15 @@ const NearHospitals = () => {
       {location ? (
         <div className="rounded overflow-hidden border border-success shadow" style={{ height: '80vh' }}>
           <MapContainer
-            center={[location.lat, location.lon]}  // This should center the map on the user's location
+            center={[location.lat, location.lon]}
             zoom={13}
             style={{ height: '100%', width: '100%' }}
           >
             <TileLayer
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             />
-            <Marker position={[location.lat, location.lon]}>
+            <Marker position={[location.lat, location.lon]} icon={userIcon}>
               <Popup className="text-success">🧍 তুমি এখানে আছো</Popup>
             </Marker>
             {hospitals.map((h, i) => {
