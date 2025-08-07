@@ -21,6 +21,7 @@ const NearHospitals = () => {
           lat: pos.coords.latitude,
           lon: pos.coords.longitude,
         };
+        console.log('User Location:', coords); // Debugging log
         setLocation(coords);
         fetchHospitals(coords.lat, coords.lon);
       },
@@ -47,6 +48,7 @@ const NearHospitals = () => {
         }
       );
       const results = response.data.elements;
+      console.log('Hospitals Data:', results); // Debugging log
       setHospitals(results);
     } catch (error) {
       console.error('Error fetching hospitals:', error);
@@ -67,7 +69,7 @@ const NearHospitals = () => {
       {location ? (
         <div className="rounded overflow-hidden border border-success shadow" style={{ height: '80vh' }}>
           <MapContainer
-            center={[location.lat, location.lon]}
+            center={[location.lat, location.lon]}  // This should center the map on the user's location
             zoom={13}
             style={{ height: '100%', width: '100%' }}
           >
