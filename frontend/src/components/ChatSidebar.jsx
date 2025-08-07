@@ -113,7 +113,7 @@ const ChatSidebar = ({ onSelectChat, selectedChatId, onNewChat }) => {
                     </div>
                   </div>
                   <div className="flex-grow-1 min-w-0">
-                    <div className={`fw-bold ${selectedChatId === chat._id ? 'text-white' : 'text-light'}`}>
+                    <div className={`fw-bold ${selectedChatId === chat._id ? 'text-dark' : 'text-light'}`}>
                       {truncateMessage(chat.title || 'Health Chat')}
                     </div>
                     <div className={`small ${selectedChatId === chat._id ? 'text-white-50' : 'text-muted'}`}>
