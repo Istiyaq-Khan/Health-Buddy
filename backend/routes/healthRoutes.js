@@ -25,8 +25,9 @@ router.get("/test-gemini", async (req, res) => {
       return res.status(500).json({ message: "GEMINI_API_KEY is not set" });
     }
     
+    const model = process.env.GEMINI_MODEL || "gemini-2.5-flash";
     const resp = await axios.post(
-      `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${process.env.GEMINI_API_KEY}`,
       { contents: [{ parts: [{ text: "Hello, this is a test." }] }] }
     );
     

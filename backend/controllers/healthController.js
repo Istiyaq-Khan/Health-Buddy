@@ -32,9 +32,10 @@ Return ONLY a valid JSON object with this exact structure (no markdown, no extra
 Important: Return only the JSON object, no markdown markers or any other text. Please answer all questions in Bangla. and tell English in brackets
 `;
 
-    console.log("Making request to Gemini API...");
+    const model = process.env.GEMINI_MODEL || "gemini-2.5-flash";
+    console.log(`Making request to Gemini API (model: ${model})...`);
     const resp = await axios.post(
-      `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${process.env.GEMINI_API_KEY}`,
       { contents: [{ parts: [{ text: prompt }] }] }
     );
 
@@ -170,10 +171,11 @@ Please respond with:
 Keep your response helpful, professional, and focused on health and wellness.
 `;
 
+    const model = process.env.GEMINI_MODEL || "gemini-2.5-flash";
     console.log("Sending message to Gemini:", message);
     
     const resp = await axios.post(
-      `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${process.env.GEMINI_API_KEY}`,
       { contents: [{ parts: [{ text: prompt }] }] }
     );
 
