@@ -3,11 +3,26 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { auth } from "../firebase/firebaseConfig";
 import { API_BASE_URL } from "../config";
+import { 
+  BarChart3, 
+  RefreshCw, 
+  Plus, 
+  Activity, 
+  Calendar, 
+  Pill, 
+  Stethoscope, 
+  AlertTriangle, 
+  ShieldAlert,
+  Search,
+  Sparkles,
+  FileText
+} from "lucide-react";
 
 export default function Dashboard() {
   const [history, setHistory] = useState([]);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -17,157 +32,225 @@ export default function Dashboard() {
     return () => unsubscribe();
   }, []);
 
+  const fetchHistory = async () => {
+    if (!user) return;
+    setRefreshing(true);
+    try {
+      const token = await user.getIdToken();
+      const res = await axios.get(
+        `${API_BASE_URL}/api/health/history`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setHistory(res.data || []);
+    } catch (err) {
+      console.error("History fetch error:", err);
+    } finally {
+      setRefreshing(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchHistory = async () => {
-      if (!user) return;
-
-      try {
-        const token = await user.getIdToken();
-        const res = await axios.get(
-          `${API_BASE_URL}/api/health/history`,
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
-        setHistory(res.data);
-      } catch (err) {
-        alert(`❌ ইতিহাস লোড হয়নি: ${err.response?.data?.message || err.message}`);
-      }
-    };
-
     if (user) fetchHistory();
   }, [user]);
 
   if (loading) {
     return (
-      <div className="container text-center mt-5 text-white">
-        <div className="spinner-border text-success" role="status"></div>
-        <p className="mt-2">লোড হচ্ছে...</p>
+      <div className="min-vh-100 font-display d-flex flex-column align-items-center justify-content-center bg-dark text-white p-4">
+        <div className="spinner-border text-emerald" style={{ color: '#10b981' }} role="status"></div>
+        <p className="mt-3 text-muted">ড্যাশবোর্ড লোড হচ্ছে...</p>
       </div>
     );
   }
 
   if (!user) {
     return (
-      <div className="container text-center mt-5 text-white">
-        <h2 className="text-danger">🔐 লগইন প্রয়োজন</h2>
-        <p>ড্যাশবোর্ডে ঢুকতে হলে লগইন করতে হবে।</p>
-        <Link to="/login" className="btn btn-success">লগইন করো</Link>
+      <div className="container py-5 text-center font-display">
+        <div className="glass-panel p-5 mx-auto box-glow" style={{ maxWidth: '420px' }}>
+          <BarChart3 size={48} className="text-emerald-400 mb-3" style={{ color: '#10b981' }} />
+          <h4 className="fw-bold text-white mb-2">লগইন প্রয়োজন</h4>
+          <p className="text-muted small mb-4">আপনার স্বাস্থ্য হিস্টোরি দেখতে একাউন্টে লগইন করুন।</p>
+          <Link to="/login" className="btn-emerald text-decoration-none">লগইন করুন</Link>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="container py-4 bg-dark text-white min-vh-100">
-      <div className="d-flex justify-content-between align-items-center mb-4">
-        <h2 className="text-success">📊 তোমার পুরোনো বিশ্লেষণ</h2>
-        <button
-          className="btn btn-outline-light btn-sm"
-          onClick={async () => {
-            try {
-              const token = await user.getIdToken();
-              const res = await axios.get(
-                `${API_BASE_URL}/api/health/history`,
-                { headers: { Authorization: `Bearer ${token}` } }
-              );
-              setHistory(res.data);
-              alert("✅ ইতিহাস রিফ্রেশড!");
-            } catch (err) {
-              alert("❌ রিফ্রেশ করতে সমস্যা হয়েছে!");
-            }
-          }}
-        >
-          🔄 রিফ্রেশ
-        </button>
-      </div>
+    <div className="min-vh-100 font-display bg-dark text-white py-5">
+      <div className="container px-3 px-md-4">
+        
+        {/* Header Title & Actions */}
+        <div className="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4 pb-3 border-bottom" style={{ borderColor: 'var(--color-rule)' }}>
+          <div>
+            <h2 className="display-6 fw-bold text-white mb-1 d-flex align-items-center gap-2">
+              <BarChart3 className="text-emerald-400" style={{ color: '#10b981' }} />
+              স্বাস্থ্য ড্যাশবোর্ড (Health Records)
+            </h2>
+            <p className="text-muted small mb-0">
+              আপনার পূর্ববর্তী সকল লক্ষণ এনালাইসিস ও ডায়াগনস্টিক রিপোর্ট
+            </p>
+          </div>
 
-      {history.length === 0 ? (
-        <div className="card text-center shadow-sm p-4 border-0 bg-secondary text-white">
-          <h5 className="mb-2">🤔 কোন এনালাইসিস নেই!</h5>
-          <p>চলো, প্রথম এনালাইসিস করে ফেলি এখনই।</p>
-          <Link to="/analyze" className="btn btn-success mt-2">🔍 এনালাইসিস শুরু করো</Link>
+          <div className="d-flex align-items-center gap-2">
+            <button
+              onClick={fetchHistory}
+              disabled={refreshing}
+              className="btn btn-glass btn-sm rounded-pill font-display d-flex align-items-center gap-2"
+            >
+              <RefreshCw size={15} className={refreshing ? 'animate-spin' : ''} />
+              <span>{refreshing ? 'রিফ্রেশ হচ্ছে...' : 'রিফ্রেশ'}</span>
+            </button>
+
+            <Link to="/analyze" className="btn-emerald btn-sm rounded-pill text-decoration-none d-flex align-items-center gap-2">
+              <Plus size={16} />
+              <span>নতুন এনালাইসিস</span>
+            </Link>
+          </div>
         </div>
-      ) : (
-        history.map((h, i) => {
-          let parsed = h.result;
-          try {
-            if (typeof h.result === "string") {
-              parsed = JSON.parse(
-                h.result.replace(/```json\s*|\s*```/g, "")
-              );
-            }
-          } catch (err) {}
 
-          return (
-            <div key={i} className="card mb-3 border-success shadow-sm bg-secondary text-white">
-              <div className="card-body">
-                <div className="d-flex justify-content-between align-items-center mb-2">
-                  <h5 className="text-success mb-0">📄 এনালাইসিস #{history.length - i}</h5>
-                  <small className="text-light">{new Date(h.timestamp || h.createdAt).toLocaleString()}</small>
+        {/* Stats Summary Cards */}
+        <div className="row g-3 mb-5">
+          <div className="col-12 col-sm-6 col-md-4">
+            <div className="glass-card p-4 border-0">
+              <div className="d-flex align-items-center justify-content-between mb-2">
+                <span className="small text-muted">মোট হেলথ চেক</span>
+                <div className="p-2 rounded-lg" style={{ backgroundColor: 'rgba(16, 185, 129, 0.15)', color: '#10b981' }}>
+                  <FileText size={20} />
                 </div>
+              </div>
+              <div className="fs-2 fw-extrabold text-white">{history.length} টি</div>
+              <small className="text-emerald-400" style={{ color: '#34d399', fontSize: '0.78rem' }}>ক্লাউডে সংরক্ষিত রিপোর্ট</small>
+            </div>
+          </div>
 
-                <p className="mb-2"><strong>🩺 লক্ষণ:</strong> {Array.isArray(h.symptoms) ? h.symptoms.join(", ") : h.symptoms}</p>
+          <div className="col-12 col-sm-6 col-md-4">
+            <div className="glass-card p-4 border-0">
+              <div className="d-flex align-items-center justify-content-between mb-2">
+                <span className="small text-muted">সর্বশেষ চেক</span>
+                <div className="p-2 rounded-lg" style={{ backgroundColor: 'rgba(6, 182, 212, 0.15)', color: '#06b6d4' }}>
+                  <Calendar size={20} />
+                </div>
+              </div>
+              <div className="fs-5 fw-bold text-white text-truncate">
+                {history.length > 0 ? new Date(history[0].timestamp || history[0].createdAt).toLocaleDateString() : '—'}
+              </div>
+              <small className="text-muted" style={{ fontSize: '0.78rem' }}>তাং আপডেট</small>
+            </div>
+          </div>
 
-                {typeof parsed === "object" && parsed !== null ? (
-                  <div className="mt-3">
-                    {parsed.diseases && (
-                      <div className="mb-2">
-                        <strong className="text-danger">🦠 সম্ভাব্য রোগ:</strong>
-                        <ul className="ms-3 mb-0 small">
-                          {parsed.diseases.map((d, j) => (
-                            <li key={j}>• {d}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                    {parsed.vitamins && (
-                      <div className="mb-2">
-                        <strong className="text-success">💊 ভিটামিন:</strong>
-                        <ul className="ms-3 mb-0 small">
-                          {parsed.vitamins.map((v, j) => (
-                            <li key={j}>• {v}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                    {parsed.medicines && (
-                      <div className="mb-2">
-                        <strong className="text-primary">💊 ঔষধ:</strong>
-                        <ul className="ms-3 mb-0 small">
-                          {parsed.medicines.map((m, j) => (
-                            <li key={j}>• {m}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                    {parsed.tips && (
-                      <div className="mb-2">
-                        <strong className="text-info">🏠 পরামর্শ:</strong>
-                        <p className="ms-3 small">{parsed.tips}</p>
-                      </div>
-                    )}
-                    {parsed.advisedoctor && (
-                      <div className="mb-2">
-                        <strong className="text-info">🧑‍⚕️ কিছু ডাক্তারের ফোন নম্বর:</strong>
-                        <p className="ms-3 small">{parsed.advisedoctor}</p>
-                      </div>
-                    )}
-                    {parsed.doctorAlert && (
-                      <div className="alert alert-warning py-1 px-2">
-                        ⚠️ গুরুতর অবস্থায় ডাক্তারের পরামর্শ নিন!
-                      </div>
+          <div className="col-12 col-sm-6 col-md-4">
+            <div className="glass-card p-4 border-0">
+              <div className="d-flex align-items-center justify-content-between mb-2">
+                <span className="small text-muted">এআই মডেল স্ট্যাটাস</span>
+                <div className="p-2 rounded-lg" style={{ backgroundColor: 'rgba(16, 185, 129, 0.15)', color: '#10b981' }}>
+                  <Sparkles size={20} />
+                </div>
+              </div>
+              <div className="fs-5 fw-bold text-emerald-400" style={{ color: '#34d399' }}>সক্রিয় (Active)</div>
+              <small className="text-muted" style={{ fontSize: '0.78rem' }}>Google Gemini Pro API</small>
+            </div>
+          </div>
+        </div>
+
+        {/* History Reports Feed */}
+        {history.length === 0 ? (
+          <div className="glass-panel p-5 text-center box-glow my-4 mx-auto" style={{ maxWidth: '520px' }}>
+            <Activity size={48} className="text-emerald-400 mb-3 opacity-50" style={{ color: '#10b981' }} />
+            <h4 className="fw-bold text-white mb-2">কোন পূর্ববর্তী এনালাইসিস নেই</h4>
+            <p className="text-muted small mb-4">আপনার প্রথম স্বাস্থ্য এনালাইসিস সম্পন্ন করতে নিচের বাটনে ক্লিক করুন।</p>
+            <Link to="/analyze" className="btn-emerald text-decoration-none">
+              <Search size={18} />
+              <span>এনালাইসিস শুরু করুন</span>
+            </Link>
+          </div>
+        ) : (
+          <div className="d-flex flex-column gap-4">
+            {history.map((h, i) => {
+              let parsed = h.result;
+              try {
+                if (typeof h.result === "string") {
+                  parsed = JSON.parse(h.result.replace(/```json\s*|\s*```/g, ""));
+                }
+              } catch (err) {}
+
+              return (
+                <div key={i} className="glass-card p-4 border-0 position-relative box-glow" style={{ backgroundColor: 'rgba(22, 36, 32, 0.85)' }}>
+                  
+                  {/* Card Top */}
+                  <div className="d-flex flex-wrap align-items-center justify-content-between gap-2 pb-3 mb-3 border-bottom" style={{ borderColor: 'var(--color-rule)' }}>
+                    <div className="d-flex align-items-center gap-2">
+                      <span className="badge-emerald font-mono">Report #{history.length - i}</span>
+                      <span className="text-muted small">
+                        📅 {new Date(h.timestamp || h.createdAt).toLocaleString()}
+                      </span>
+                    </div>
+                    {parsed && parsed.doctorAlert && (
+                      <span className="badge-danger">
+                        <AlertTriangle size={13} /> ডাক্তার পরামর্শ সুপারিশকৃত
+                      </span>
                     )}
                   </div>
-                ) : (
-                  <pre className="bg-dark p-2 rounded small text-white border border-secondary">{parsed}</pre>
-                )}
-              </div>
-            </div>
-          );
-        })
-      )}
 
-      <div className="text-center mt-5">
-        <h4 className="mb-3">🔍 আবার লক্ষণ চেক করতে চাও?</h4>
-        <Link to="/analyze" className="btn btn-success btn-lg shadow">চলো এনালাইসিসে</Link>
+                  {/* Symptoms Listed */}
+                  <div className="mb-3">
+                    <span className="small text-muted font-mono text-uppercase">উপসর্গ/লক্ষণ (Symptoms):</span>
+                    <div className="d-flex flex-wrap gap-2 mt-1">
+                      {Array.isArray(h.symptoms) ? h.symptoms.map((s, idx) => (
+                        <span key={idx} className="btn-glass btn-sm border-0 py-1 px-3" style={{ fontSize: '0.82rem' }}>
+                          🩺 {s}
+                        </span>
+                      )) : (
+                        <span className="text-light fw-medium">{h.symptoms}</span>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Parsed Result Breakdown */}
+                  {typeof parsed === "object" && parsed !== null ? (
+                    <div className="row g-3 mt-2">
+                      {parsed.diseases && (
+                        <div className="col-12 col-md-6">
+                          <div className="p-3 rounded-xl" style={{ backgroundColor: 'rgba(244, 63, 94, 0.08)', border: '1px solid rgba(244, 63, 94, 0.2)' }}>
+                            <strong className="text-danger small d-block mb-1">🦠 সম্ভাব্য রোগ:</strong>
+                            <ul className="mb-0 ps-3 small text-light">
+                              {parsed.diseases.map((d, j) => <li key={j}>{d}</li>)}
+                            </ul>
+                          </div>
+                        </div>
+                      )}
+
+                      {parsed.medicines && (
+                        <div className="col-12 col-md-6">
+                          <div className="p-3 rounded-xl" style={{ backgroundColor: 'rgba(16, 185, 129, 0.08)', border: '1px solid rgba(16, 185, 129, 0.2)' }}>
+                            <strong className="text-emerald-400 small d-block mb-1" style={{ color: '#34d399' }}>💊 প্রাথমিক ঔষধ:</strong>
+                            <ul className="mb-0 ps-3 small text-light">
+                              {parsed.medicines.map((m, j) => <li key={j}>{m}</li>)}
+                            </ul>
+                          </div>
+                        </div>
+                      )}
+
+                      {parsed.tips && (
+                        <div className="col-12">
+                          <div className="p-3 rounded-xl" style={{ backgroundColor: 'rgba(255, 255, 255, 0.03)', border: '1px solid var(--color-rule)' }}>
+                            <strong className="text-muted small d-block mb-1">🏠 ঘরোয়া পরামর্শ:</strong>
+                            <p className="mb-0 small text-light">{parsed.tips}</p>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <pre className="p-3 rounded-xl small text-light font-mono mb-0" style={{ backgroundColor: 'rgba(9, 16, 14, 0.8)', border: '1px solid var(--color-rule)', whiteSpace: 'pre-wrap' }}>
+                      {parsed}
+                    </pre>
+                  )}
+
+                </div>
+              );
+            })}
+          </div>
+        )}
+
       </div>
     </div>
   );
