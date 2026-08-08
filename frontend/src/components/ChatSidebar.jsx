@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getAuth } from 'firebase/auth';
 import axios from 'axios';
+import { API_BASE_URL } from '../config';
 
 const ChatSidebar = ({ onSelectChat, selectedChatId, onNewChat }) => {
   const [chatHistory, setChatHistory] = useState([]);
@@ -16,7 +17,7 @@ const ChatSidebar = ({ onSelectChat, selectedChatId, onNewChat }) => {
   const loadChatHistory = async () => {
     try {
       const token = await auth.currentUser.getIdToken();
-      const response = await axios.get('https://health-buddy-backend-gigy.onrender.com/api/health/chat-sessions', {
+      const response = await axios.get(`${API_BASE_URL}/api/health/chat-sessions`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setChatHistory(response.data);

@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import axios from "axios";
 import { getAuth } from "firebase/auth";
+import { API_BASE_URL } from "../config";
 
 const colors = {
   background: "#6c757d",
@@ -43,7 +44,7 @@ const SymptomForm = ({ setResult }) => {
       const token = await user.getIdToken();
 
       const res = await axios.post(
-        "https://health-buddy-backend-gigy.onrender.com/api/health/analyze",
+        `${API_BASE_URL}/api/health/analyze`,
         { symptoms: symptoms.split(",").map((s) => s.trim()) },
         {
           headers: {

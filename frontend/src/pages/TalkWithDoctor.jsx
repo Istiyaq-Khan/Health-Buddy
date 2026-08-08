@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { getAuth } from 'firebase/auth';
 import ChatSidebar from '../components/ChatSidebar';
+import { API_BASE_URL } from '../config';
 
 const TalkWithDoctor = () => {
   const [messages, setMessages] = useState([]);
@@ -36,7 +37,7 @@ const TalkWithDoctor = () => {
   const loadChatHistory = async () => {
     try {
       const token = await user.getIdToken();
-      const response = await axios.get('https://health-buddy-backend-gigy.onrender.com/api/health/chat-history', {
+      const response = await axios.get(`${API_BASE_URL}/api/health/chat-history`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setMessages(response.data);
@@ -49,7 +50,7 @@ const TalkWithDoctor = () => {
     setSelectedChatId(chatId);
     try {
       const token = await user.getIdToken();
-      const response = await axios.get(`https://health-buddy-backend-gigy.onrender.com/api/health/chat-sessions/${chatId}`, {
+      const response = await axios.get(`${API_BASE_URL}/api/health/chat-sessions/${chatId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setMessages(response.data.messages || []);
@@ -79,7 +80,7 @@ const TalkWithDoctor = () => {
 
     try {
       const token = await user.getIdToken();
-      const response = await axios.post('https://health-buddy-backend-gigy.onrender.com/api/health/chat', {
+      const response = await axios.post(`${API_BASE_URL}/api/health/chat`, {
         message: inputMessage,
         sessionId: selectedChatId
       }, {
@@ -278,7 +279,7 @@ const TalkWithDoctor = () => {
         </div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         .max-w-75 { max-width: 75%; }
       `}</style>
     </div>

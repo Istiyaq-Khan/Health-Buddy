@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { auth } from "../firebase/firebaseConfig";
+import { API_BASE_URL } from "../config";
 
 export default function Dashboard() {
   const [history, setHistory] = useState([]);
@@ -23,7 +24,7 @@ export default function Dashboard() {
       try {
         const token = await user.getIdToken();
         const res = await axios.get(
-          "https://health-buddy-backend-gigy.onrender.com/api/health/history",
+          `${API_BASE_URL}/api/health/history`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
         setHistory(res.data);
@@ -64,7 +65,7 @@ export default function Dashboard() {
             try {
               const token = await user.getIdToken();
               const res = await axios.get(
-                "http://localhost:5000/api/health/history",
+                `${API_BASE_URL}/api/health/history`,
                 { headers: { Authorization: `Bearer ${token}` } }
               );
               setHistory(res.data);
