@@ -17,6 +17,7 @@ import {
   Activity,
   ShieldCheck
 } from 'lucide-react';
+import MarkdownRenderer from '../components/MarkdownRenderer';
 
 const SUGGESTED_PROMPTS = [
   "আমার ২ দিন ধরে জ্বর ও গায়ে ব্যথা, কি করবো?",
@@ -273,18 +274,16 @@ const TalkWithDoctor = () => {
                         <span>{formatTime(msg.timestamp)}</span>
                       </div>
 
-                      <div className={`p-3 rounded-2xl ${
+                      <div className={`p-3 p-md-3.5 rounded-2xl ${
                         isUser 
                           ? 'bg-emerald-grad text-dark shadow-sm' 
                           : 'glass-card border-0 text-light'
                       }`} style={{
                         background: isUser ? 'linear-gradient(135deg, #10b981 0%, #059669 100%)' : 'rgba(22, 36, 32, 0.85)',
                         color: isUser ? '#022c22' : 'var(--color-ink)',
-                        whiteSpace: 'pre-wrap',
-                        lineHeight: '1.6',
-                        fontSize: '0.92rem'
+                        fontSize: '0.94rem'
                       }}>
-                        {msg.content}
+                        <MarkdownRenderer content={msg.content} isUser={isUser} />
                       </div>
                     </div>
 
